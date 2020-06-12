@@ -1,3 +1,5 @@
+% Partial Philadelphia General Fund Proposed FY2020 Budget as a Bar Chart
+
 clc;
 clear all;
 
@@ -27,6 +29,8 @@ abbrev_dept = reordercats(abbrev_dept, {'Behavioral Health', 'Community Empowerm
 % general funding, in millions $USD
 abbrev_gen_funds = [15.895444, 90e-2, 45.350014, 58.995719, 115.965013, 2.370828, 740.915097, 159.422140, 67.858055, 155.382932];
 
+%% Plotting
+
 % Plot horizontal bar chart 
 close all;
 barchart = barh(abbrev_dept, abbrev_gen_funds);
@@ -36,8 +40,8 @@ ax=gca;
 ax.XGrid='on';
 set(ax, 'TickLength', [0,0]);
 
-% Add data tips to end of bars
-all_xtips = barchart.YEndPoints + 0.3;
+% Get all (x,y) datatip coordinatess
+all_xtips = barchart.YEndPoints + 0.3; % add padding
 all_ytips = barchart.XEndPoints;
 
 % initialize data tip (x,y) coordinates and labels
@@ -55,4 +59,4 @@ for i = 1:length(indices)
 end
 labels = string(labels);
 
-text(xtips, ytips , labels, 'VerticalAlignment','middle', 'FontSize', 8);
+text(xtips, ytips , labels, 'VerticalAlignment','middle', 'FontSize', 8); % add datatip labels
