@@ -1,0 +1,58 @@
+clc;
+clear all;
+
+%% More Departments
+
+dept = categorical({'Behavioral Health', 'Community Empowerment', 'Education', 'Homeless Services', 'Human Services', 'Labor', 'Planning & Devel', 'Police', 'Prisons', 'Public Health',  'Parks & Rec', 'Streets', 'Water'});
+
+% to preserve order as written in previous line:
+dept = reordercats(dept, {'Behavioral Health', 'Community Empowerment', 'Education', 'Homeless Services', 'Human Services', 'Labor', 'Planning & Devel', 'Police', 'Prisons', 'Public Health',  'Parks & Rec', 'Streets', 'Water'});
+
+% to reorder alphanumerically:
+% dept = reordercats(dept);
+
+% general funding, in millions $USD
+gen_funds = [15.895444, 90e-2, 45.350014, 58.995719, 115.965013, 2.370828, 9.810746, 740.915097, 238.183523, 159.422140, 67.858055, 155.382932, 422.602475];
+
+%% Fewer Departments
+
+abbrev_dept = categorical({'Behavioral Health', 'Community Empowerment', 'Education', 'Homeless Services', 'Human Services', 'Labor', 'Police', 'Public Health',  'Parks & Rec', 'Streets'});
+
+% to preserve order as written in previous line:
+abbrev_dept = reordercats(abbrev_dept, {'Behavioral Health', 'Community Empowerment', 'Education', 'Homeless Services', 'Human Services', 'Labor', 'Police', 'Public Health',  'Parks & Rec', 'Streets'});
+
+% to reorder alphanumerically:
+% dept = reordercats(dept);
+
+% general funding, in millions $USD
+abbrev_gen_funds = [15.895444, 90e-2, 45.350014, 58.995719, 115.965013, 2.370828, 740.915097, 159.422140, 67.858055, 155.382932];
+
+% Plot horizontal bar chart 
+close all;
+barchart = barh(abbrev_dept, abbrev_gen_funds);
+title({'General Fund 2020 Proposed Budget', 'Philadelphia, PA', '\fontsize{18} Partial Budget'});
+xlabel({'US$ Millions', '\fontsize{8} Source: 2020 Proposed Operating Budget Detail - City of Philadelphia'});
+ax=gca;
+ax.XGrid='on';
+set(ax, 'TickLength', [0,0]);
+
+% Add data tips to end of bars
+all_xtips = barchart.YEndPoints + 0.3;
+all_ytips = barchart.XEndPoints;
+
+% initialize data tip (x,y) coordinates and labels
+xtips = [];
+ytips = [];
+labels = [];
+
+indices = [1, 2, 3, 4, 6, 7]; % indices of department funds you want to label on chart
+
+% assemble vectors
+for i = 1:length(indices)
+    xtips = [xtips barchart.YEndPoints(indices(i))+1];
+    ytips = [ytips barchart.XEndPoints(indices(i))];
+    labels = [labels round(barchart.YData(indices(i)), 2)];
+end
+labels = string(labels);
+
+text(xtips, ytips , labels, 'VerticalAlignment','middle', 'FontSize', 8);
