@@ -1,0 +1,43 @@
+% Partial St. Louis  Proposed FY2020 Budget (All Funds) as a Bar Chart
+
+clc;
+clear all;
+
+%% Departments / Divisions
+
+T = readtable('St_Louis.xlsx')
+div = T.Dept_Division;
+funds = T.AllFunds2020
+
+
+%% Plotting
+
+% Plot horizontal bar chart 
+close all;
+barchart = barh(div, funds);
+title({'2020 ProposedBudget', 'Philadelphia, PA', '\fontsize{18} Partial Budget'});
+xlabel({'US$ Millions', '\fontsize{8} Source: 2020 Proposed Operating Budget Detail - City of Philadelphia'});
+ax=gca;
+ax.XGrid='on';
+set(ax, 'TickLength', [0,0]);
+
+% Get all (x,y) datatip coordinatess
+all_xtips = barchart.YEndPoints + 0.3; % add padding
+all_ytips = barchart.XEndPoints;
+
+% initialize data tip (x,y) coordinates and labels
+xtips = [];
+ytips = [];
+labels = [];
+
+indices = [1, 2, 3, 4, 6, 7]; % indices of department funds you want to label on chart
+
+% assemble vectors
+for i = 1:length(indices)
+    xtips = [xtips barchart.YEndPoints(indices(i))+1];
+    ytips = [ytips barchart.XEndPoints(indices(i))];
+    labels = [labels round(barchart.YData(indices(i)), 2)];
+end
+labels = string(labels);
+
+text(xtips, ytips , labels, 'VerticalAlignment','middle', 'FontSize', 8); % add datatip labels
