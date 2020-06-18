@@ -32,7 +32,7 @@ labels = [];
 
 % assemble vectors
 for i = 1:length(div)
-    xtips = [xtips barchart.YEndPoints(i)+0.3]; % add padding
+    xtips = [xtips barchart.YEndPoints(i)+0.03]; % add padding
     ytips = [ytips barchart.XEndPoints(i)];
     labels = [labels round(barchart.YData(i), 2)];
 end
